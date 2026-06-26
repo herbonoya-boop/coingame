@@ -25,10 +25,15 @@
   .btn.pri { background:linear-gradient(180deg,#f4ba57,#d98a2b); color:#3a2408; width:100%; }
   .btn.go { background:linear-gradient(180deg,#ff8163,#e8412f); color:#fff; width:100%; font-size:18px; padding:16px; }
   .btn.lock { background:linear-gradient(180deg,#63d79e,#2fa874); color:#063322; width:100%; font-size:18px; padding:16px; }
-  .btn.item { background:linear-gradient(180deg,#c98bff,#8a4fd6); color:#fff; width:100%; margin-top:8px; }
   .btn.gh { background:linear-gradient(180deg,#3a2c1d,#2a2014); color:#f2e6d4; }
   .btn.sm { padding:10px 14px; font-size:13px; }
-  .btn:disabled { opacity:.4; }
+  .btn:disabled { opacity:.45; }
+  .actionrow { display:flex; gap:10px; align-items:center; }
+  .actionrow .btn { flex:1; width:auto; }
+  .itembtn { flex:none; width:62px; height:62px; border-radius:50%; border:3px solid rgba(255,255,255,.32); cursor:pointer; font-size:26px; color:#fff; display:flex; align-items:center; justify-content:center; position:relative; transition:transform .08s; box-shadow:0 6px 14px rgba(0,0,0,.5), inset 0 3px 5px rgba(255,255,255,.42), inset 0 -7px 11px rgba(0,0,0,.4); }
+  .itembtn:active { transform:scale(.92); }
+  .itembtn::after { content:''; position:absolute; top:9px; left:13px; width:18px; height:10px; border-radius:50%; background:rgba(255,255,255,.5); filter:blur(2px); }
+  .itembtn.used { filter:grayscale(.85); opacity:.45; }
   .seg { display:flex; background:rgba(0,0,0,.3); border-radius:12px; padding:4px; margin-top:8px; border:1px solid rgba(255,220,160,.08); }
   .seg div { flex:1; text-align:center; padding:9px 4px; border-radius:9px; font-size:13px; cursor:pointer; color:#b89a72; transition:.15s; }
   .seg div.on { background:linear-gradient(180deg,#f4ba57,#d98a2b); color:#3a2408; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,.3); }
@@ -39,14 +44,6 @@
   .dot { width:15px; height:15px; border-radius:50%; flex:none; box-shadow:0 0 10px currentColor; }
   .pchip.turn { background:linear-gradient(180deg,rgba(232,163,61,.28),rgba(232,163,61,.08)); border:1px solid #e8a33d; }
   .code { font-size:32px; font-weight:700; letter-spacing:8px; text-align:center; color:#ffd58a; margin:8px 0; text-shadow:0 0 18px rgba(255,180,90,.5); }
-  .cards { display:flex; gap:10px; margin-top:10px; justify-content:center; }
-  .card { flex:1; display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; background:none; border:none; padding:6px 2px; transition:transform .1s; }
-  .card:active { transform:translateY(2px) scale(.97); }
-  .medal { width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:29px; position:relative; border:3px solid rgba(255,255,255,.3); box-shadow:0 7px 16px rgba(0,0,0,.5), inset 0 3px 5px rgba(255,255,255,.45), inset 0 -8px 12px rgba(0,0,0,.4); }
-  .medal::after { content:''; position:absolute; top:9px; left:14px; width:22px; height:13px; border-radius:50%; background:rgba(255,255,255,.5); filter:blur(2px); }
-  .card.sel .medal { border-color:#fff; box-shadow:0 0 0 3px #fff, 0 0 18px 4px currentColor, inset 0 3px 5px rgba(255,255,255,.45); transform:scale(1.06); }
-  .card .nm { font-size:12px; font-weight:700; color:#e9d7bd; } .card.sel .nm { color:#fff; }
-  .card .ds { font-size:10px; color:#a98b62; text-align:center; line-height:1.25; }
   canvas#cv { display:block; width:100%; border-radius:16px; touch-action:none; box-shadow:0 18px 40px rgba(0,0,0,.55); }
   .hud { display:flex; justify-content:space-between; align-items:center; margin:12px 4px 8px; font-size:14px; }
   .hud b { color:#ffd58a; }
@@ -105,7 +102,7 @@
       <div class="label">모드</div><div class="seg cfgseg" data-cfg="gameMode"><div data-v="classic" class="on">클래식</div><div data-v="item">아이템전</div></div>
     </div>
     <div id="cfgView" class="hide" style="font-size:13px;color:#c9a877;margin-top:10px;"></div>
-    <div id="itemPick" class="hide"><div class="label">내 아이템 선택 (1장)</div><div class="cards" id="itemCards"></div></div>
+    <div id="itemNote" class="hide" style="font-size:12px;color:#c98bff;margin-top:10px;">🎁 아이템은 게임 시작 시 랜덤으로 지급됩니다.</div>
     <button class="btn go" id="startOnline" style="margin-top:14px;">전원 게임 시작</button>
     <div class="hint" id="waitHint">방장이 시작하면 모두 함께 시작됩니다.</div>
   </div>
@@ -114,8 +111,7 @@
     <div class="hud"><div>차례: <b id="turnName">-</b></div><div id="progress"></div></div>
     <canvas id="cv"></canvas>
     <div class="stage" id="stageMsg">조준하세요</div>
-    <button class="btn lock" id="actionBtn">각도 고정</button>
-    <button class="btn item hide" id="itemBtn">아이템 사용</button>
+    <div class="actionrow"><button class="btn lock" id="actionBtn">각도 고정</button><button class="itembtn hide" id="itemBtn"></button></div>
     <div class="plist" id="gameList" style="margin-top:10px;"></div>
   </div>
 
@@ -149,9 +145,9 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
   let config={coinsPer:1,turnMode:'rotate',gameMode:'classic'};
   let angle=0, power=0, simCoins=[], simEraser=null, shooterColor='#fff', simFrames=0, slowFactor=1;
   let pend={size:1,pow:false};
-  let cssW=0,cssH=0,DPR=1,table={}, now=0, dragging=false;
+  let cssW=0,cssH=0,DPR=1,table={}, now=0, dragging=false, dragX=0, dragA=0;
   let particles=[], ambient=[], shake=0, flash=0, lastBannerTurn=-1;
-  let room=null, localVersion=-1, observing=false, pendingRoom=null, myCards=null;
+  let room=null, localVersion=-1, observing=false, pendingRoom=null;
   const cv=$('cv'), ctx=cv.getContext('2d');
 
   const SUPA_READY=SUPABASE_URL.startsWith('http')&&!SUPABASE_URL.includes('여기에'); let supa=null;
@@ -234,7 +230,14 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
     if(c.pow) ctx.restore(); }
   function shade(hex,f){ f=(f==null)?0.55:f; const n=parseInt(hex.slice(1),16); return 'rgb('+((((n>>16)&255)*f)|0)+','+((((n>>8)&255)*f)|0)+','+(((n&255)*f)|0)+')'; }
   function lighten(hex,a){ const n=parseInt(hex.slice(1),16); let r=(n>>16)&255,g=(n>>8)&255,b=n&255; r+=(255-r)*a;g+=(255-g)*a;b+=(255-b)*a; return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')'; }
-  function drawAim(a){ const dx=Math.sin(a),dy=-Math.cos(a); for(let i=1;i<=21;i++){ const t=i*0.045,fx=SX+dx*t,fy=SY+dy*t; if(fy<0||fx<0||fx>W) break; const m=map(fx,fy); const flow=(Math.sin(now/200-i*0.5)+1)/2; ctx.globalAlpha=0.2+0.24*flow; ctx.beginPath(); ctx.arc(m.sx,m.sy,Math.max(1.5,3-i*0.08)+flow*1.1,0,7); ctx.fillStyle='#ffe9c2'; ctx.fill(); } ctx.globalAlpha=1; }
+  function drawAim(a){ const s=map(SX,SY); const dx=Math.sin(a),dy=-Math.cos(a); let t=2.2;
+    for(let tt=0.04;tt<2.2;tt+=0.04){ const fx=SX+dx*tt,fy=SY+dy*tt; if(fy<0||fx<0||fx>W){ t=tt; break; } }
+    const e=map(Math.max(0,Math.min(W,SX+dx*t)),Math.max(0,SY+dy*t)); const col=shooterColor, pulse=0.55+0.25*Math.sin(now/170);
+    ctx.save(); ctx.lineCap='round'; ctx.shadowColor=col; ctx.shadowBlur=18;
+    ctx.globalAlpha=0.16*pulse; ctx.strokeStyle=col; ctx.lineWidth=18; ctx.beginPath();ctx.moveTo(s.sx,s.sy);ctx.lineTo(e.sx,e.sy);ctx.stroke();
+    ctx.globalAlpha=0.40*pulse; ctx.lineWidth=8; ctx.beginPath();ctx.moveTo(s.sx,s.sy);ctx.lineTo(e.sx,e.sy);ctx.stroke();
+    ctx.globalAlpha=0.85*pulse; ctx.strokeStyle=lighten(col,0.7); ctx.lineWidth=2.5; ctx.beginPath();ctx.moveTo(s.sx,s.sy);ctx.lineTo(e.sx,e.sy);ctx.stroke();
+    ctx.globalAlpha=1; ctx.shadowBlur=0; ctx.restore(); }
   function drawGauge(pw){ const x=cssW-18,w=14,y0=table.topY+12,y1=table.botY-12,h=y1-y0; const yOf=g=>y1-g*h;
     ctx.fillStyle='rgba(0,0,0,.42)'; roundRect(x-w,y0,w,h,7);ctx.fill();
     const f=Math.min(1,pw/PSCALE),fh=h*f; const gg=ctx.createLinearGradient(0,y1,0,y0); gg.addColorStop(0,'#39c2a3');gg.addColorStop(.6,'#ffd23d');gg.addColorStop(1,'#ff3b5c'); ctx.fillStyle=gg; roundRect(x-w,y1-fh,w,fh,7);ctx.fill();
@@ -277,10 +280,11 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
   function expireTurn(){ const cur=cp(); if(cur){ coins.forEach(c=>{ if(c.owner===cur.id) c.shield=false; }); } if(eraser&&turnIndex>eraser.untilTurn) eraser=null; }
   function startMyTurn(){ expireTurn(); phase='angle'; angle=0; power=PSCALE; slowFactor=1; pend={size:1,pow:false}; const cur=cp(); shooterColor=cur.color;
     $('actionBtn').textContent='각도 고정'; $('actionBtn').className='btn lock'; $('stageMsg').textContent='좌우로 드래그해 조준 후 [각도 고정]'; setupItemBtn(cur); turnBanner(); updateHud(); }
-  function waitRemote(){ expireTurn(); phase='remoteWait'; const cur=cp(); shooterColor=cur?cur.color:'#fff'; $('actionBtn').className='btn lock hide'; $('itemBtn').className='btn item hide'; $('stageMsg').textContent=(cur?cur.name:'상대')+' 님 차례'; turnBanner(); updateHud(); }
-  function setupItemBtn(cur){ const me=mode==='online'?players.find(p=>p.id===myId):cur; const it=(config.gameMode==='item')?(me&&me.item):null;
-    if(it&&it!=='none'&&!me.itemUsed){ $('itemBtn').className='btn item'; $('itemBtn').textContent=ITEMS[it].ic+' '+ITEMS[it].nm+' 사용'; $('itemBtn').disabled=false; } else $('itemBtn').className='btn item hide'; }
-  function useItem(){ const cur=cp(); const me=mode==='online'?players.find(p=>p.id===myId):cur; if(!me||me.itemUsed) return; const it=me.item; me.itemUsed=true; $('itemBtn').className='btn item hide';
+  function waitRemote(){ expireTurn(); phase='remoteWait'; const cur=cp(); shooterColor=cur?cur.color:'#fff'; $('actionBtn').className='btn lock hide'; $('itemBtn').classList.add('hide'); $('stageMsg').textContent=(cur?cur.name:'상대')+' 님 차례'; turnBanner(); updateHud(); }
+  function setupItemBtn(cur){ const me=mode==='online'?players.find(p=>p.id===myId):cur; const it=(config.gameMode==='item')?(me&&me.item):null; const b=$('itemBtn');
+    if(it&&it!=='none'){ b.classList.remove('hide'); b.textContent=ITEMS[it].ic; b.style.background='radial-gradient(circle at 35% 30%, rgba(255,255,255,.75), '+ITEMS[it].c+' 60%, rgba(0,0,0,.45))'; b.classList.toggle('used',!!me.itemUsed); b.disabled=!!me.itemUsed; }
+    else b.classList.add('hide'); }
+  function useItem(){ const cur=cp(); const me=mode==='online'?players.find(p=>p.id===myId):cur; if(!me||me.itemUsed||config.gameMode!=='item') return; const it=me.item; if(!it||it==='none') return; me.itemUsed=true; $('itemBtn').classList.add('used'); $('itemBtn').disabled=true;
     const I=ITEMS[it]; setBanner(I.ic+' '+I.nm+'!'); flash=Math.max(flash,0.3);
     if(it==='sizeup'){ pend.size=1.5; }
     else if(it==='powerup'){ pend.pow=true; }
@@ -297,7 +301,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
     simCoins.push(shot);
     spawnSparks(spawnX,SY,power*1.2,pend.pow?'#ff8a3d':lighten(cur.color,0.3)); spawnRing(spawnX,SY,'#ffd9a0',0.018); flash=Math.max(flash,0.25);
     if(mode==='online') sendShot({owner:cur.id, snapshot:simCoins.filter(c=>c!==shot).map(c=>({id:c.id,owner:c.owner,name:c.name,color:c.color,x:c.x,y:c.y,fell:false,rad:c.rad,shield:c.shield})), eraser:eraser, launch:{spawnX,angle,power,rad,pow:pend.pow,name:cur.name,color:cur.color,owner:cur.id} });
-    phase='sim'; simFrames=0; $('actionBtn').className='btn lock hide'; $('stageMsg').textContent='동전이 미끄러지는 중...'; }
+    phase='sim'; simFrames=0; $('actionBtn').className='btn lock hide'; $('itemBtn').classList.add('hide'); $('stageMsg').textContent='동전이 미끄러지는 중...'; }
   function finishShot(){ coins=simCoins.filter(c=>!c.fell).map(packCoin); simCoins=[]; simEraser=null; turnIndex++;
     if(turnIndex>=order.length){ endGame(); if(mode==='online') broadcast('finished'); }
     else { if(mode==='online'){ broadcast('playing'); waitRemote(); } else startMyTurn(); } updateGameList(); }
@@ -329,10 +333,10 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
 
   function buildOrder(ids){ const c=config.coinsPer; let o=[]; const sh=shuffle(ids); if(config.turnMode==='consecutive'){ for(const id of sh) for(let k=0;k<c;k++) o.push(id); } else { for(let k=0;k<c;k++) for(const id of sh) o.push(id); } return o; }
   function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.random()*(i+1)|0; [a[i],a[j]]=[a[j],a[i]]; } return a; }
-  function dealCards(){ const p=shuffle(POOL); return [p[0],p[1],p[2]]; }
+  function dealItem(){ return POOL[Math.random()*POOL.length|0]; }
 
   function startLocal(n){ players=[]; for(let i=0;i<n;i++) players.push({id:'L'+i,name:'플레이어'+(i+1),color:COLORS[i],item:null,itemUsed:false}); if(myName) players[0].name=myName;
-    if(config.gameMode==='item') players.forEach(p=>{ p.item=POOL[Math.random()*POOL.length|0]; });
+    if(config.gameMode==='item') players.forEach(p=>{ p.item=dealItem(); });
     order=buildOrder(players.map(p=>p.id)); turnIndex=0; coins=[]; eraser=null; particles=[]; lastBannerTurn=-1; mode='local'; show('game'); resize(); updateGameList(); startMyTurn(); }
 
   async function createRoom(){ if(!myName){flashName();return;} if(!supa){alert('Supabase URL/Key를 먼저 입력하세요.');return;}
@@ -346,20 +350,17 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
     localVersion=r.version; room=r; config={...r.config}; enterWaiting(code,false); renderWaiting(r); }
   function enterWaiting(code,isHost){ mode='online'; room=room||{}; room.code=code; window._isHost=isHost; $('roomCode').textContent=code; $('cfg').classList.toggle('hide',!isHost); $('cfgView').classList.toggle('hide',isHost); $('startOnline').classList.toggle('hide',!isHost); $('waitHint').textContent=isHost?'설정 후 시작 버튼을 누르세요.':'방장이 시작하기를 기다리는 중...'; show('waiting'); renderWaiting(room); subscribeRoom(code); }
   function renderWaiting(r){ players=r.players||[]; if(r.config) config={...r.config};
-    $('waitList').innerHTML=players.map(p=>{ const it=(config.gameMode==='item')?(p.item&&p.item!=='none'?' '+ITEMS[p.item].ic:(p.item==='none'?' ❌':' …')):''; return `<div class="pchip"><span class="dot" style="background:${p.color};color:${p.color}"></span><span style="flex:1">${p.name}${p.id===myId?' (나)':''}${it}</span></div>`; }).join('');
+    $('waitList').innerHTML=players.map(p=>`<div class="pchip"><span class="dot" style="background:${p.color};color:${p.color}"></span><span style="flex:1">${p.name}${p.id===myId?' (나)':''}</span></div>`).join('');
     document.querySelectorAll('#cfg .cfgseg').forEach(seg=>{ const key=seg.dataset.cfg; [...seg.children].forEach(d=>d.classList.toggle('on',d.dataset.v==String(config[key]))); });
     if(!window._isHost){ $('cfgView').textContent=`동전 ${config.coinsPer}개 · ${config.turnMode==='rotate'?'번갈아':'연속'} · ${config.gameMode==='item'?'아이템전':'클래식'}`; }
-    const itemOn=config.gameMode==='item'; $('itemPick').classList.toggle('hide',!itemOn);
-    if(itemOn){ if(!myCards) myCards=dealCards(); const me=players.find(p=>p.id===myId);
-      $('itemCards').innerHTML=myCards.map(k=>{ const I=ITEMS[k]; const sel=me&&me.item===k?'sel':''; return `<div class="card ${sel}" data-k="${k}"><div class="medal" style="background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.75), ${I.c} 60%, rgba(0,0,0,.45));color:${I.c}">${I.ic}</div><div class="nm">${I.nm}</div><div class="ds">${I.ds}</div></div>`; }).join(''); } }
-  async function pickItem(k){ const me=players.find(p=>p.id===myId); if(!me) return; me.item=k; room.players=players; room.version++; localVersion=room.version; renderWaiting(room); try{ await saveRoom(room);}catch(e){} }
+    $('itemNote').classList.toggle('hide', config.gameMode!=='item'); }
   async function setCfg(key,val){ if(!window._isHost) return; config[key]=val; room.config={...config}; room.version++; localVersion=room.version; renderWaiting(room); try{ await saveRoom(room);}catch(e){} }
   function applyRoom(r){ room=r; players=r.players; order=r.order; turnIndex=r.turnIndex; coins=r.coins||[]; eraser=r.eraser||null; if(r.config) config={...r.config};
     if(r.status==='lobby'){ renderWaiting(r); return; }
     if(r.status==='finished'){ if($('game').classList.contains('hide')){show('game');resize();} updateGameList(); endGame(); return; }
     if(r.status==='playing'){ if($('game').classList.contains('hide')){show('game');resize();} updateGameList(); const cur=order[turnIndex];
       if(cur===myId){ if(phase!=='angle'&&phase!=='power'&&phase!=='sim'&&phase!=='placeEraser') startMyTurn(); } else waitRemote(); } }
-  async function startOnline(){ if(config.gameMode==='item') players.forEach(p=>{ if(!p.item) p.item='none'; p.itemUsed=false; }); order=buildOrder(players.map(p=>p.id)); room.players=players; room.order=order; room.status='playing'; room.turnIndex=0; room.coins=[]; room.eraser=null; room.config={...config}; room.version++; localVersion=room.version; particles=[]; lastBannerTurn=-1; try{ await saveRoom(room);}catch(e){} applyRoom(room); }
+  async function startOnline(){ players.forEach(p=>{ p.item=(config.gameMode==='item')?dealItem():null; p.itemUsed=false; }); order=buildOrder(players.map(p=>p.id)); room.players=players; room.order=order; room.status='playing'; room.turnIndex=0; room.coins=[]; room.eraser=null; room.config={...config}; room.version++; localVersion=room.version; particles=[]; lastBannerTurn=-1; try{ await saveRoom(room);}catch(e){} applyRoom(room); }
   async function broadcast(status){ room.coins=coins; room.eraser=eraser; room.players=players; room.turnIndex=turnIndex; room.status=status; room.version++; localVersion=room.version; try{ await saveRoom(room);}catch(e){} }
   function flashName(){ $('nameInput').style.borderColor='#ff5c5c'; $('nameInput').focus(); setTimeout(()=>$('nameInput').style.borderColor='',1200); }
 
@@ -367,20 +368,19 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
   let localN=2; $('countSeg').onclick=e=>{ const d=e.target.closest('[data-n]'); if(!d)return; [...$('countSeg').children].forEach(x=>x.classList.toggle('on',x===d)); localN=+d.dataset.n; };
   $('lobby').querySelectorAll('.cfgseg').forEach(seg=>{ seg.addEventListener('click',e=>{ const d=e.target.closest('[data-v]'); if(!d)return; [...seg.children].forEach(x=>x.classList.toggle('on',x===d)); const v=d.dataset.v; config[seg.dataset.cfg]=(seg.dataset.cfg==='coinsPer')?+v:v; }); });
   $('cfg').querySelectorAll('.cfgseg').forEach(seg=>{ seg.addEventListener('click',e=>{ const d=e.target.closest('[data-v]'); if(!d)return; const v=d.dataset.v; setCfg(seg.dataset.cfg, seg.dataset.cfg==='coinsPer'?+v:v); }); });
-  $('itemCards').addEventListener('click',e=>{ const c=e.target.closest('[data-k]'); if(c) pickItem(c.dataset.k); });
   $('nameInput').oninput=e=>{ myName=e.target.value.trim(); };
   $('startLocal').onclick=()=>startLocal(localN);
   $('createRoom').onclick=createRoom; $('joinRoom').onclick=joinRoom; $('startOnline').onclick=startOnline; $('actionBtn').onclick=onAction; $('itemBtn').onclick=useItem;
 
-  function aimFromPointer(cx,cy){ const rect=cv.getBoundingClientRect(); const s=map(SX,SY); let a=Math.atan2((cx-rect.left)-s.sx, -((cy-rect.top)-s.sy)); angle=Math.max(-MAXA,Math.min(MAXA,a)); }
+  function aimMove(cx){ const gain=(2*MAXA)/(cssW*2.2); angle=Math.max(-MAXA,Math.min(MAXA, dragA+(cx-dragX)*gain)); }
   cv.addEventListener('pointerdown',e=>{ e.preventDefault();
-    if(phase==='angle'){ dragging=true; aimFromPointer(e.clientX,e.clientY); }
+    if(phase==='angle'){ dragging=true; dragX=e.clientX; dragA=angle; }
     else if(phase==='power'){ onAction(); }
     else if(phase==='placeEraser'){ const rect=cv.getBoundingClientRect(); const f=unmap(e.clientX-rect.left,e.clientY-rect.top); f.fy=Math.max(0.12*H,Math.min(0.8*H,f.fy)); eraser={x:f.fx,y:f.fy,untilTurn:turnIndex+1}; spawnRing(f.fx,f.fy,'#c46bff',0.02); flash=Math.max(flash,0.3); phase='angle'; $('actionBtn').className='btn lock'; $('actionBtn').textContent='각도 고정'; $('stageMsg').textContent='지우개 설치 완료! 드래그해 조준'; } });
-  cv.addEventListener('pointermove',e=>{ if(dragging&&phase==='angle'){ e.preventDefault(); aimFromPointer(e.clientX,e.clientY); } });
+  cv.addEventListener('pointermove',e=>{ if(dragging&&phase==='angle'){ e.preventDefault(); aimMove(e.clientX); } });
   window.addEventListener('pointerup',()=>{ dragging=false; });
 
-  $('again').onclick=()=>{ $('winOverlay').classList.add('hide'); stopConfetti(); unsubscribe(); observing=false; pendingRoom=null; myCards=null; phase='lobby'; coins=[]; eraser=null; particles=[]; shake=0; flash=0; localVersion=-1; room=null; show('lobby'); };
+  $('again').onclick=()=>{ $('winOverlay').classList.add('hide'); stopConfetti(); unsubscribe(); observing=false; pendingRoom=null; phase='lobby'; coins=[]; eraser=null; particles=[]; shake=0; flash=0; localVersion=-1; room=null; show('lobby'); };
 
   requestAnimationFrame(loop);
 })();
