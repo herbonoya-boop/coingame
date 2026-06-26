@@ -9,29 +9,18 @@
 <style>
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; user-select:none; -webkit-user-select:none; }
   html,body { margin:0; background:#0a0704; }
-  body {
-    font-family:"Fredoka","Pretendard","Apple SD Gothic Neo",sans-serif;
-    min-height:100vh; color:#f2e6d4; display:flex; justify-content:center; align-items:flex-start;
-  }
-  #app {
-    width:100%; max-width:520px; padding:14px; min-height:100vh; position:relative; overflow:hidden;
-    background:
-      radial-gradient(ellipse 80% 50% at 50% 28%, rgba(255,176,92,.10), transparent 70%),
-      radial-gradient(ellipse at 50% 120%, #241809 0%, #140d06 55%, #0a0704 100%);
-  }
+  body { font-family:"Fredoka","Pretendard","Apple SD Gothic Neo",sans-serif; min-height:100vh; color:#f2e6d4; display:flex; justify-content:center; align-items:flex-start; }
+  #app { width:100%; max-width:520px; padding:14px; min-height:100vh; position:relative; overflow:hidden;
+    background:radial-gradient(ellipse 80% 50% at 50% 28%, rgba(255,176,92,.10), transparent 70%), radial-gradient(ellipse at 50% 120%, #241809 0%, #140d06 55%, #0a0704 100%); }
   .title { text-align:center; margin:8px 0 2px; }
-  .title h1 { margin:0; font-size:26px; font-weight:700; letter-spacing:-.5px;
-    background:linear-gradient(180deg,#ffe7b0,#e8a33d); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .title h1 { margin:0; font-size:26px; font-weight:700; letter-spacing:-.5px; background:linear-gradient(180deg,#ffe7b0,#e8a33d); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .title small { display:block; font-weight:500; font-size:12px; color:#c9a877; margin-top:3px; }
-  .panel { background:linear-gradient(160deg,#2c2117,#1c150d); border:1px solid #45331f; border-radius:16px;
-    padding:18px; margin-top:14px; box-shadow:0 14px 34px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,220,160,.14); animation:panelIn .4s ease; }
+  .panel { background:linear-gradient(160deg,#2c2117,#1c150d); border:1px solid #45331f; border-radius:16px; padding:18px; margin-top:14px; box-shadow:0 14px 34px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,220,160,.14); animation:panelIn .4s ease; }
   @keyframes panelIn { from{opacity:0;transform:translateY(14px) scale(.98);} to{opacity:1;transform:none;} }
   .row { display:flex; gap:8px; }
-  input[type=text] { flex:1; background:rgba(0,0,0,.35); border:1px solid #4a3722; border-radius:11px;
-    padding:12px; color:#fff; font-size:15px; font-family:inherit; outline:none; }
+  input[type=text] { flex:1; background:rgba(0,0,0,.35); border:1px solid #4a3722; border-radius:11px; padding:12px; color:#fff; font-size:15px; font-family:inherit; outline:none; }
   input[type=text]:focus { border-color:#e8a33d; box-shadow:0 0 0 3px rgba(232,163,61,.18); }
-  .btn { border:none; border-radius:13px; padding:13px 14px; font-size:15px; font-weight:600; cursor:pointer;
-    font-family:inherit; transition:transform .06s, box-shadow .06s; box-shadow:0 4px 0 rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.25); }
+  .btn { border:none; border-radius:13px; padding:13px 14px; font-size:15px; font-weight:600; cursor:pointer; font-family:inherit; transition:transform .06s, box-shadow .06s; box-shadow:0 4px 0 rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.25); }
   .btn:active { transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,.4); }
   .btn.pri { background:linear-gradient(180deg,#f4ba57,#d98a2b); color:#3a2408; width:100%; }
   .btn.go { background:linear-gradient(180deg,#ff8163,#e8412f); color:#fff; width:100%; font-size:18px; padding:16px; }
@@ -44,8 +33,7 @@
   .hint { font-size:12px; color:#a98b62; line-height:1.55; margin-top:9px; }
   .label { font-size:13px; color:#d8b988; margin:4px 0 7px; font-weight:500; }
   .plist { display:flex; flex-direction:column; gap:7px; margin-top:6px; }
-  .pchip { display:flex; align-items:center; gap:10px; padding:10px 12px;
-    background:linear-gradient(180deg,rgba(255,220,160,.06),rgba(0,0,0,.12)); border-radius:11px; font-size:14px; border:1px solid rgba(255,220,160,.06); }
+  .pchip { display:flex; align-items:center; gap:10px; padding:10px 12px; background:linear-gradient(180deg,rgba(255,220,160,.06),rgba(0,0,0,.12)); border-radius:11px; font-size:14px; border:1px solid rgba(255,220,160,.06); }
   .dot { width:15px; height:15px; border-radius:50%; flex:none; box-shadow:0 0 10px currentColor; }
   .pchip.turn { background:linear-gradient(180deg,rgba(232,163,61,.28),rgba(232,163,61,.08)); border:1px solid #e8a33d; }
   .code { font-size:32px; font-weight:700; letter-spacing:8px; text-align:center; color:#ffd58a; margin:8px 0; text-shadow:0 0 18px rgba(255,180,90,.5); }
@@ -55,8 +43,7 @@
   .stage { text-align:center; font-size:14px; margin:10px 0; min-height:20px; font-weight:600; color:#f2e6d4; }
   .overlay { position:fixed; inset:0; background:rgba(8,5,2,.8); display:flex; align-items:center; justify-content:center; z-index:50; }
   #confetti { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
-  .winbox { position:relative; background:linear-gradient(160deg,#2e2014,#1a1209); border:1px solid #5a4126; border-radius:22px;
-    padding:30px 26px; text-align:center; width:84%; max-width:340px; box-shadow:0 24px 70px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,220,160,.18); animation:winIn .5s cubic-bezier(.2,1.3,.4,1); }
+  .winbox { position:relative; background:linear-gradient(160deg,#2e2014,#1a1209); border:1px solid #5a4126; border-radius:22px; padding:30px 26px; text-align:center; width:84%; max-width:340px; box-shadow:0 24px 70px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,220,160,.18); animation:winIn .5s cubic-bezier(.2,1.3,.4,1); }
   @keyframes winIn { from{opacity:0;transform:scale(.7) translateY(20px);} to{opacity:1;transform:none;} }
   .winbox .trophy { font-size:58px; display:inline-block; animation:trophyPop 1s ease infinite alternate; }
   @keyframes trophyPop { from{transform:translateY(0) rotate(-5deg);} to{transform:translateY(-8px) rotate(5deg);} }
@@ -64,12 +51,9 @@
   .winbox p { color:#bda175; font-size:14px; margin:0 0 18px; }
   .rank { text-align:left; margin:10px 0 18px; font-size:13px; }
   .rank div { display:flex; align-items:center; gap:9px; padding:6px 0; border-bottom:1px solid rgba(255,220,160,.08); }
-  #turnBanner { position:absolute; top:46%; left:50%; transform:translate(-50%,-50%) scale(.8); padding:14px 28px; border-radius:16px;
-    font-size:20px; font-weight:700; background:linear-gradient(180deg,#f4ba57,#d98a2b); color:#3a2408; box-shadow:0 10px 30px rgba(0,0,0,.5);
-    opacity:0; pointer-events:none; z-index:30; white-space:nowrap; }
+  #turnBanner { position:absolute; top:46%; left:50%; transform:translate(-50%,-50%) scale(.8); padding:14px 28px; border-radius:16px; font-size:20px; font-weight:700; background:linear-gradient(180deg,#f4ba57,#d98a2b); color:#3a2408; box-shadow:0 10px 30px rgba(0,0,0,.5); opacity:0; pointer-events:none; z-index:30; white-space:nowrap; }
   #turnBanner.show { animation:bannerIn 1.5s ease forwards; }
-  @keyframes bannerIn { 0%{opacity:0;transform:translate(-50%,-50%) scale(.6);} 15%{opacity:1;transform:translate(-50%,-50%) scale(1.05);}
-    28%{transform:translate(-50%,-50%) scale(1);} 75%{opacity:1;transform:translate(-50%,-50%) scale(1);} 100%{opacity:0;transform:translate(-50%,-50%) scale(.95);} }
+  @keyframes bannerIn { 0%{opacity:0;transform:translate(-50%,-50%) scale(.6);} 15%{opacity:1;transform:translate(-50%,-50%) scale(1.05);} 28%{transform:translate(-50%,-50%) scale(1);} 75%{opacity:1;transform:translate(-50%,-50%) scale(1);} 100%{opacity:0;transform:translate(-50%,-50%) scale(.95);} }
   .hide { display:none !important; }
 </style>
 </head>
@@ -99,7 +83,7 @@
         <input type="text" id="joinCode" placeholder="방 코드 (예: ABCD)" maxlength="4" style="text-transform:uppercase;">
         <button class="btn gh sm" id="joinRoom">참여</button>
       </div>
-      <div class="hint">각자 자기 기기에서 같은 코드로 참여하세요. 발사 결과가 실시간으로 모두에게 반영됩니다.</div>
+      <div class="hint">각자 자기 기기에서 같은 코드로 참여하세요. 상대의 조준·발사가 실시간으로 함께 보입니다.</div>
     </div>
   </div>
 
@@ -136,7 +120,7 @@
 
 <script>
 /* ============================================================
-   ⬇️⬇️⬇️  여기 두 줄만 본인 Supabase 값으로 교체하세요  ⬇️⬇️⬇️
+   ⬇️⬇️⬇️  Supabase 값  ⬇️⬇️⬇️
    ============================================================ */
 const SUPABASE_URL      = "https://qpfpbtfmfanchxbrhegi.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
@@ -146,31 +130,33 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
   const $ = s => document.getElementById(s);
   const COLORS=['#ff5c5c','#4d94ff','#33cc77','#ffb13d','#c46bff','#2bd6d6'];
 
-  // ----- Supabase client -----
   const SUPA_READY = SUPABASE_URL.startsWith('http') && !SUPABASE_URL.includes('여기에');
   let supa=null;
   try{ if(window.supabase && SUPA_READY) supa=window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); }catch(e){}
   async function saveRoom(r){ if(!supa) return; await supa.from('rooms').upsert({ code:r.code, state:r, updated_at:new Date().toISOString() }); }
-  async function loadRoom(code){ if(!supa) return null;
-    const { data } = await supa.from('rooms').select('state').eq('code',code).maybeSingle(); return data?data.state:null; }
+  async function loadRoom(code){ if(!supa) return null; const { data } = await supa.from('rooms').select('state').eq('code',code).maybeSingle(); return data?data.state:null; }
+
   let channel=null, pollTimer=null;
   function subscribeRoom(code){
     if(channel){ supa.removeChannel(channel); channel=null; }
-    channel=supa.channel('room-'+code)
+    channel=supa.channel('room-'+code,{config:{broadcast:{self:false}}})
       .on('postgres_changes',{event:'*',schema:'public',table:'rooms',filter:'code=eq.'+code},
           p=>{ if(p.new && p.new.state) handleRemoteState(p.new.state); })
+      .on('broadcast',{event:'aim'}, ({payload})=>{ if(payload && payload.aimer!==myId) onRemoteAim(payload); })
+      .on('broadcast',{event:'shot'}, ({payload})=>{ if(payload && payload.owner!==myId) onRemoteShot(payload); })
       .subscribe();
-    // 백업 폴링: Realtime이 끊기거나 늦어도 2초 안에 최신 상태를 따라잡음
     if(pollTimer) clearInterval(pollTimer);
     pollTimer=setInterval(async ()=>{ try{ const r=await loadRoom(code); if(r) handleRemoteState(r); }catch(e){} }, 2000);
   }
   function unsubscribe(){ if(channel){ supa.removeChannel(channel); channel=null; } if(pollTimer){ clearInterval(pollTimer); pollTimer=null; } }
+  function sendAim(){ if(channel) try{ channel.send({type:'broadcast',event:'aim',payload:{aimer:myId,angle,power,aphase:phase}}); }catch(e){} }
+  function sendShot(d){ if(channel) try{ channel.send({type:'broadcast',event:'shot',payload:d}); }catch(e){} }
   function handleRemoteState(r){
     if(r.version<=localVersion){ if(r.status==='lobby') renderWaitList(r); return; }
+    if(observing){ pendingRoom=r; return; }      // 상대 발사 애니메이션 중이면 끝나고 적용
     localVersion=r.version; applyRoom(r);
   }
 
-  // ----- physics constants -----
   const W=1.0,H=1.34,R=0.058,FRICTION=0.984,WALLDAMP=0.72,STOP=0.00022;
   const PMIN=0; const SX=W/2, SY=H-R*1.6;
   const PSCALE=((H-R*1.6)/0.9)*(1-FRICTION); const GF_EDGE=0.9; const MAXA=58*Math.PI/180;
@@ -181,6 +167,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
   let cssW=0,cssH=0,DPR=1,table={}, now=0;
   let particles=[], ambient=[], shake=0, lastBannerTurn=-1;
   let room=null, localVersion=-1;
+  let observing=false, pendingRoom=null, remoteAim={active:false,angle:0,power:0,aphase:'angle'}, lastAimSent=0;
   const cv=$('cv'), ctx=cv.getContext('2d');
 
   function show(id){ ['lobby','waiting','game'].forEach(s=>$(s).classList.toggle('hide', s!==id)); }
@@ -194,40 +181,22 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
     cv.width=Math.round(cw*DPR); cv.height=Math.round(ch*DPR);
     computeTable(); initAmbient(); render();
   }
-  function computeTable(){ const mx=cssW*0.07, my=cssH*0.05;
-    table.topY=my; table.botY=cssH-my; table.cx=cssW/2; table.botHalf=cssW/2-mx; table.topHalf=table.botHalf*0.74; }
-  function map(fx,fy){ const nx=fx/W, ny=fy/H;
-    const sy=table.topY+(table.botY-table.topY)*ny;
-    const half=table.topHalf+(table.botHalf-table.topHalf)*ny;
-    return {sx:table.cx+(nx-0.5)*2*half, sy, half, rscr:(R/W)*(2*half)}; }
-  function initAmbient(){ ambient=[]; for(let i=0;i<36;i++) ambient.push({x:Math.random()*cssW,y:Math.random()*cssH,
-      r:0.5+Math.random()*1.9,s:0.12+Math.random()*0.4,a:0.12+Math.random()*0.28,o:Math.random()*100}); }
+  function computeTable(){ const mx=cssW*0.07, my=cssH*0.05; table.topY=my; table.botY=cssH-my; table.cx=cssW/2; table.botHalf=cssW/2-mx; table.topHalf=table.botHalf*0.74; }
+  function map(fx,fy){ const nx=fx/W, ny=fy/H; const sy=table.topY+(table.botY-table.topY)*ny; const half=table.topHalf+(table.botHalf-table.topHalf)*ny; return {sx:table.cx+(nx-0.5)*2*half, sy, half, rscr:(R/W)*(2*half)}; }
+  function initAmbient(){ ambient=[]; for(let i=0;i<36;i++) ambient.push({x:Math.random()*cssW,y:Math.random()*cssH,r:0.5+Math.random()*1.9,s:0.12+Math.random()*0.4,a:0.12+Math.random()*0.28,o:Math.random()*100}); }
   window.addEventListener('resize',()=>{ if(!$('game').classList.contains('hide')) resize(); });
 
-  // ----- particles -----
-  function spawnSparks(fx,fy,st,color){ const n=5+Math.min(18,Math.floor(st*220));
-    for(let i=0;i<n;i++){ const a=Math.random()*6.2832, sp=0.004+Math.random()*0.013;
-      particles.push({x:fx,y:fy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.04+Math.random()*0.035,size:1.4+Math.random()*2.4,color}); } }
-  function spawnPoof(fx,fy,color){ for(let i=0;i<18;i++){ const a=Math.random()*6.2832, sp=0.005+Math.random()*0.015;
-      particles.push({x:fx,y:fy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-0.003,life:1,decay:0.025+Math.random()*0.02,size:2+Math.random()*3,color:i%3?color:'#fff'}); } }
+  function spawnSparks(fx,fy,st,color){ const n=5+Math.min(18,Math.floor(st*220)); for(let i=0;i<n;i++){ const a=Math.random()*6.2832, sp=0.004+Math.random()*0.013; particles.push({x:fx,y:fy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.04+Math.random()*0.035,size:1.4+Math.random()*2.4,color}); } }
+  function spawnPoof(fx,fy,color){ for(let i=0;i<18;i++){ const a=Math.random()*6.2832, sp=0.005+Math.random()*0.015; particles.push({x:fx,y:fy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-0.003,life:1,decay:0.025+Math.random()*0.02,size:2+Math.random()*3,color:i%3?color:'#fff'}); } }
   function updateParticles(){ for(const p of particles){ p.x+=p.vx; p.y+=p.vy; p.vx*=0.9; p.vy*=0.9; p.life-=p.decay; } particles=particles.filter(p=>p.life>0); }
-  function drawParticles(){ ctx.shadowBlur=8;
-    for(const p of particles){ const m=map(p.x,p.y); ctx.globalAlpha=Math.max(0,p.life); ctx.shadowColor=p.color; ctx.fillStyle=p.color;
-      ctx.beginPath(); ctx.arc(m.sx,m.sy,p.size*(0.5+p.life*0.6),0,7); ctx.fill(); }
-    ctx.globalAlpha=1; ctx.shadowBlur=0; }
+  function drawParticles(){ ctx.shadowBlur=8; for(const p of particles){ const m=map(p.x,p.y); ctx.globalAlpha=Math.max(0,p.life); ctx.shadowColor=p.color; ctx.fillStyle=p.color; ctx.beginPath(); ctx.arc(m.sx,m.sy,p.size*(0.5+p.life*0.6),0,7); ctx.fill(); } ctx.globalAlpha=1; ctx.shadowBlur=0; }
 
   function drawBackground(){
-    const g=ctx.createLinearGradient(0,0,0,cssH); g.addColorStop(0,'#160e07'); g.addColorStop(.55,'#20150b'); g.addColorStop(1,'#0c0704');
-    ctx.fillStyle=g; ctx.fillRect(0,0,cssW,cssH);
-    const sp=ctx.createRadialGradient(cssW/2,cssH*0.42,8,cssW/2,cssH*0.42,cssH*0.72);
-    sp.addColorStop(0,'rgba(255,194,116,.20)'); sp.addColorStop(.5,'rgba(255,170,90,.06)'); sp.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=sp; ctx.fillRect(0,0,cssW,cssH);
-    for(const d of ambient){ d.y-=d.s; d.x+=Math.sin((d.y+d.o)*0.02)*0.15; if(d.y<-5){ d.y=cssH+5; d.x=Math.random()*cssW; }
-      const tw=0.4+0.6*Math.abs(Math.sin(d.y*0.05+d.o)); ctx.globalAlpha=d.a*tw; ctx.fillStyle='#ffd9a0';
-      ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,7); ctx.fill(); }
+    const g=ctx.createLinearGradient(0,0,0,cssH); g.addColorStop(0,'#160e07'); g.addColorStop(.55,'#20150b'); g.addColorStop(1,'#0c0704'); ctx.fillStyle=g; ctx.fillRect(0,0,cssW,cssH);
+    const sp=ctx.createRadialGradient(cssW/2,cssH*0.42,8,cssW/2,cssH*0.42,cssH*0.72); sp.addColorStop(0,'rgba(255,194,116,.20)'); sp.addColorStop(.5,'rgba(255,170,90,.06)'); sp.addColorStop(1,'rgba(0,0,0,0)'); ctx.fillStyle=sp; ctx.fillRect(0,0,cssW,cssH);
+    for(const d of ambient){ d.y-=d.s; d.x+=Math.sin((d.y+d.o)*0.02)*0.15; if(d.y<-5){ d.y=cssH+5; d.x=Math.random()*cssW; } const tw=0.4+0.6*Math.abs(Math.sin(d.y*0.05+d.o)); ctx.globalAlpha=d.a*tw; ctx.fillStyle='#ffd9a0'; ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,7); ctx.fill(); }
     ctx.globalAlpha=1;
-    const v=ctx.createRadialGradient(cssW/2,cssH/2,cssH*0.34,cssW/2,cssH/2,cssH*0.78);
-    v.addColorStop(0,'rgba(0,0,0,0)'); v.addColorStop(1,'rgba(0,0,0,.55)'); ctx.fillStyle=v; ctx.fillRect(0,0,cssW,cssH);
+    const v=ctx.createRadialGradient(cssW/2,cssH/2,cssH*0.34,cssW/2,cssH/2,cssH*0.78); v.addColorStop(0,'rgba(0,0,0,0)'); v.addColorStop(1,'rgba(0,0,0,.55)'); ctx.fillStyle=v; ctx.fillRect(0,0,cssW,cssH);
   }
 
   function render(){
@@ -239,68 +208,50 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
     const tl=map(0,0),tr=map(W,0),br=map(W,H),bl=map(0,H);
     ctx.save();
     ctx.beginPath(); ctx.moveTo(tl.sx,tl.sy); ctx.lineTo(tr.sx,tr.sy); ctx.lineTo(br.sx,br.sy); ctx.lineTo(bl.sx,bl.sy); ctx.closePath(); ctx.clip();
-    const wg=ctx.createLinearGradient(0,table.topY,0,table.botY);
-    wg.addColorStop(0,'#6e431f'); wg.addColorStop(.5,'#8a5a2b'); wg.addColorStop(1,'#a06b39'); ctx.fillStyle=wg; ctx.fillRect(0,0,cssW,cssH);
-    const sg=ctx.createLinearGradient(table.cx-table.botHalf,0,table.cx+table.botHalf,0);
-    sg.addColorStop(0,'rgba(0,0,0,.22)'); sg.addColorStop(.5,'rgba(255,220,165,.13)'); sg.addColorStop(1,'rgba(0,0,0,.22)'); ctx.fillStyle=sg; ctx.fillRect(0,0,cssW,cssH);
+    const wg=ctx.createLinearGradient(0,table.topY,0,table.botY); wg.addColorStop(0,'#6e431f'); wg.addColorStop(.5,'#8a5a2b'); wg.addColorStop(1,'#a06b39'); ctx.fillStyle=wg; ctx.fillRect(0,0,cssW,cssH);
+    const sg=ctx.createLinearGradient(table.cx-table.botHalf,0,table.cx+table.botHalf,0); sg.addColorStop(0,'rgba(0,0,0,.22)'); sg.addColorStop(.5,'rgba(255,220,165,.13)'); sg.addColorStop(1,'rgba(0,0,0,.22)'); ctx.fillStyle=sg; ctx.fillRect(0,0,cssW,cssH);
     ctx.lineWidth=2; ctx.strokeStyle='rgba(55,32,13,.5)';
     for(let p=1;p<6;p++){ const fx=p/6*W; ctx.beginPath(); for(let s=0;s<=20;s++){ const m=map(fx,s/20*H); s?ctx.lineTo(m.sx,m.sy):ctx.moveTo(m.sx,m.sy);} ctx.stroke(); }
-    for(let gi=0;gi<28;gi++){ const baseFx=(gi+0.5)/28*W, amp=0.010+(gi%3)*0.006, ph=gi*1.73;
-      ctx.lineWidth=1; ctx.strokeStyle=gi%2?'rgba(96,58,25,.34)':'rgba(182,130,75,.28)'; ctx.beginPath();
-      for(let s=0;s<=24;s++){ const fy=s/24*H, fx=baseFx+Math.sin(fy*7+ph)*amp, m=map(fx,fy); s?ctx.lineTo(m.sx,m.sy):ctx.moveTo(m.sx,m.sy);} ctx.stroke(); }
+    for(let gi=0;gi<28;gi++){ const baseFx=(gi+0.5)/28*W, amp=0.010+(gi%3)*0.006, ph=gi*1.73; ctx.lineWidth=1; ctx.strokeStyle=gi%2?'rgba(96,58,25,.34)':'rgba(182,130,75,.28)'; ctx.beginPath(); for(let s=0;s<=24;s++){ const fy=s/24*H, fx=baseFx+Math.sin(fy*7+ph)*amp, m=map(fx,fy); s?ctx.lineTo(m.sx,m.sy):ctx.moveTo(m.sx,m.sy);} ctx.stroke(); }
     ctx.restore();
     ctx.lineJoin='round';
     ctx.beginPath(); ctx.moveTo(tl.sx,tl.sy); ctx.lineTo(tr.sx,tr.sy); ctx.lineTo(br.sx,br.sy); ctx.lineTo(bl.sx,bl.sy); ctx.closePath();
     ctx.lineWidth=9; ctx.strokeStyle='#4e2f15'; ctx.stroke(); ctx.lineWidth=3.5; ctx.strokeStyle='#82542a'; ctx.stroke();
-    ctx.shadowColor='rgba(255,210,110,.8)'; ctx.shadowBlur=10; ctx.strokeStyle='rgba(255,224,128,.98)'; ctx.lineWidth=6;
-    ctx.beginPath(); ctx.moveTo(tl.sx,tl.sy); ctx.lineTo(tr.sx,tr.sy); ctx.stroke(); ctx.shadowBlur=0;
+    ctx.shadowColor='rgba(255,210,110,.8)'; ctx.shadowBlur=10; ctx.strokeStyle='rgba(255,224,128,.98)'; ctx.lineWidth=6; ctx.beginPath(); ctx.moveTo(tl.sx,tl.sy); ctx.lineTo(tr.sx,tr.sy); ctx.stroke(); ctx.shadowBlur=0;
     ctx.fillStyle='rgba(255,224,128,.6)'; ctx.font='11px sans-serif'; ctx.textAlign='center'; ctx.fillText('▲ 목표 모서리', table.cx, table.topY-6);
 
     const list=(phase==='sim')?simCoins:coins;
     for(const c of list){ if(!c.fell&&c.trail) drawTrail(c); }
     for(const c of list){ if(!c.fell) drawCoin(c); }
-    if(phase==='angle'||phase==='power'){ drawAim(); drawCoin({x:SX,y:SY,color:shooterColor}); if(phase==='power') drawGauge(); }
+
+    if(phase==='angle'||phase==='power'){ drawAim(angle); drawCoin({x:SX,y:SY,color:shooterColor}); if(phase==='power') drawGauge(power); }
+    else if(phase==='remoteWait' && remoteAim.active){ drawAim(remoteAim.angle); drawCoin({x:SX,y:SY,color:shooterColor}); if(remoteAim.aphase==='power') drawGauge(remoteAim.power); }
+
     drawParticles();
     ctx.restore();
   }
-  function drawTrail(c){ if(c.trail.length<2) return;
-    for(let i=0;i<c.trail.length;i++){ const m=map(c.trail[i].x,c.trail[i].y); ctx.globalAlpha=(i+1)/c.trail.length*0.32;
-      ctx.beginPath(); ctx.arc(m.sx,m.sy,m.rscr*0.55*(i+1)/c.trail.length+2,0,7); ctx.fillStyle=c.color; ctx.fill(); }
-    ctx.globalAlpha=1; }
+  function drawTrail(c){ if(c.trail.length<2) return; for(let i=0;i<c.trail.length;i++){ const m=map(c.trail[i].x,c.trail[i].y); ctx.globalAlpha=(i+1)/c.trail.length*0.32; ctx.beginPath(); ctx.arc(m.sx,m.sy,m.rscr*0.55*(i+1)/c.trail.length+2,0,7); ctx.fillStyle=c.color; ctx.fill(); } ctx.globalAlpha=1; }
   function drawCoin(c){ const m=map(c.x,c.y), r=m.rscr;
     ctx.beginPath(); ctx.ellipse(m.sx,m.sy+r*0.24,r*1.02,r*0.8,0,0,7); ctx.fillStyle='rgba(0,0,0,.4)'; ctx.fill();
     ctx.beginPath(); ctx.arc(m.sx,m.sy,r,0,7); ctx.fillStyle=shade(c.color,0.5); ctx.fill();
-    ctx.lineWidth=1; ctx.strokeStyle='rgba(0,0,0,.28)';
-    for(let i=0;i<30;i++){ const a=i/30*6.2832; ctx.beginPath();
-      ctx.moveTo(m.sx+Math.cos(a)*r*0.85,m.sy+Math.sin(a)*r*0.85); ctx.lineTo(m.sx+Math.cos(a)*r*0.99,m.sy+Math.sin(a)*r*0.99); ctx.stroke(); }
-    const fr=r*0.8; const rg=ctx.createRadialGradient(m.sx-fr*0.4,m.sy-fr*0.45,fr*0.1,m.sx,m.sy,fr);
-    rg.addColorStop(0,lighten(c.color,0.6)); rg.addColorStop(.5,lighten(c.color,0.12)); rg.addColorStop(1,shade(c.color,0.62));
+    ctx.lineWidth=1; ctx.strokeStyle='rgba(0,0,0,.28)'; for(let i=0;i<30;i++){ const a=i/30*6.2832; ctx.beginPath(); ctx.moveTo(m.sx+Math.cos(a)*r*0.85,m.sy+Math.sin(a)*r*0.85); ctx.lineTo(m.sx+Math.cos(a)*r*0.99,m.sy+Math.sin(a)*r*0.99); ctx.stroke(); }
+    const fr=r*0.8; const rg=ctx.createRadialGradient(m.sx-fr*0.4,m.sy-fr*0.45,fr*0.1,m.sx,m.sy,fr); rg.addColorStop(0,lighten(c.color,0.6)); rg.addColorStop(.5,lighten(c.color,0.12)); rg.addColorStop(1,shade(c.color,0.62));
     ctx.beginPath(); ctx.arc(m.sx,m.sy,fr,0,7); ctx.fillStyle=rg; ctx.fill();
     ctx.beginPath(); ctx.arc(m.sx,m.sy,fr*0.9,0,7); ctx.lineWidth=Math.max(1,r*0.06); ctx.strokeStyle='rgba(0,0,0,.16)'; ctx.stroke();
     ctx.beginPath(); ctx.arc(m.sx,m.sy,fr*0.85,0,7); ctx.strokeStyle='rgba(255,255,255,.22)'; ctx.lineWidth=1; ctx.stroke();
-    ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.font='bold '+(r*0.82)+'px Georgia, serif';
-    ctx.fillStyle=shade(c.color,0.55); ctx.fillText(':D',m.sx,m.sy+1.2);
-    ctx.fillStyle=lighten(c.color,0.6); ctx.fillText(':D',m.sx,m.sy-0.6); ctx.textBaseline='alphabetic';
+    ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.font='bold '+(r*0.82)+'px Georgia, serif'; ctx.fillStyle=shade(c.color,0.55); ctx.fillText(':D',m.sx,m.sy+1.2); ctx.fillStyle=lighten(c.color,0.6); ctx.fillText(':D',m.sx,m.sy-0.6); ctx.textBaseline='alphabetic';
     ctx.beginPath(); ctx.ellipse(m.sx-fr*0.32,m.sy-fr*0.4,fr*0.42,fr*0.24,-0.6,0,7); ctx.fillStyle='rgba(255,255,255,.26)'; ctx.fill(); }
-  function shade(hex,f){ f=(f==null)?0.55:f; const n=parseInt(hex.slice(1),16);
-    return 'rgb('+((((n>>16)&255)*f)|0)+','+((((n>>8)&255)*f)|0)+','+(((n&255)*f)|0)+')'; }
-  function lighten(hex,a){ const n=parseInt(hex.slice(1),16); let r=(n>>16)&255,g=(n>>8)&255,b=n&255;
-    r+=(255-r)*a;g+=(255-g)*a;b+=(255-b)*a; return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')'; }
-  function drawAim(){ const dx=Math.sin(angle),dy=-Math.cos(angle);
-    for(let i=1;i<=21;i++){ const t=i*0.045, fx=SX+dx*t, fy=SY+dy*t; if(fy<0||fx<0||fx>W) break; const m=map(fx,fy);
-      const flow=(Math.sin(now/200-i*0.5)+1)/2; ctx.globalAlpha=0.2+0.24*flow;
-      ctx.beginPath(); ctx.arc(m.sx,m.sy,Math.max(1.5,3-i*0.08)+flow*1.1,0,7); ctx.fillStyle='#ffe9c2'; ctx.fill(); }
-    ctx.globalAlpha=1; }
-  function drawGauge(){ const x=cssW-18,w=14,y0=table.topY+12,y1=table.botY-12,h=y1-y0; const yOf=g=>y1-g*h;
+  function shade(hex,f){ f=(f==null)?0.55:f; const n=parseInt(hex.slice(1),16); return 'rgb('+((((n>>16)&255)*f)|0)+','+((((n>>8)&255)*f)|0)+','+(((n&255)*f)|0)+')'; }
+  function lighten(hex,a){ const n=parseInt(hex.slice(1),16); let r=(n>>16)&255,g=(n>>8)&255,b=n&255; r+=(255-r)*a;g+=(255-g)*a;b+=(255-b)*a; return 'rgb('+(r|0)+','+(g|0)+','+(b|0)+')'; }
+  function drawAim(a){ const dx=Math.sin(a),dy=-Math.cos(a); for(let i=1;i<=21;i++){ const t=i*0.045, fx=SX+dx*t, fy=SY+dy*t; if(fy<0||fx<0||fx>W) break; const m=map(fx,fy); const flow=(Math.sin(now/200-i*0.5)+1)/2; ctx.globalAlpha=0.2+0.24*flow; ctx.beginPath(); ctx.arc(m.sx,m.sy,Math.max(1.5,3-i*0.08)+flow*1.1,0,7); ctx.fillStyle='#ffe9c2'; ctx.fill(); } ctx.globalAlpha=1; }
+  function drawGauge(pw){ const x=cssW-18,w=14,y0=table.topY+12,y1=table.botY-12,h=y1-y0; const yOf=g=>y1-g*h;
     ctx.fillStyle='rgba(0,0,0,.42)'; roundRect(x-w,y0,w,h,7); ctx.fill();
-    const f=Math.min(1,power/PSCALE), fh=h*f; const gg=ctx.createLinearGradient(0,y1,0,y0);
-    gg.addColorStop(0,'#39c2a3'); gg.addColorStop(.6,'#ffd23d'); gg.addColorStop(1,'#ff3b5c'); ctx.fillStyle=gg; roundRect(x-w,y1-fh,w,fh,7); ctx.fill();
+    const f=Math.min(1,pw/PSCALE), fh=h*f; const gg=ctx.createLinearGradient(0,y1,0,y0); gg.addColorStop(0,'#39c2a3'); gg.addColorStop(.6,'#ffd23d'); gg.addColorStop(1,'#ff3b5c'); ctx.fillStyle=gg; roundRect(x-w,y1-fh,w,fh,7); ctx.fill();
     const pulse=0.35+0.2*Math.sin(now/250); ctx.fillStyle='rgba(70,225,140,'+pulse+')'; ctx.fillRect(x-w,yOf(GF_EDGE),w,yOf(GF_EDGE-0.07)-yOf(GF_EDGE));
     ctx.fillStyle='rgba(255,70,80,.4)'; ctx.fillRect(x-w,y0,w,yOf(GF_EDGE)-y0);
     ctx.strokeStyle='#fff'; ctx.lineWidth=2.5; ctx.beginPath(); ctx.moveTo(x-w-5,yOf(GF_EDGE)); ctx.lineTo(x+3,yOf(GF_EDGE)); ctx.stroke();
     ctx.textAlign='right'; ctx.textBaseline='middle'; ctx.font='bold 10px sans-serif'; ctx.fillStyle='#fff'; ctx.fillText('모서리',x-w-7,yOf(GF_EDGE));
-    ctx.font='9px sans-serif'; ctx.fillStyle='rgba(120,235,165,.95)'; ctx.fillText('목표',x-w-7,yOf(GF_EDGE-0.035));
-    ctx.textAlign='center'; ctx.textBaseline='alphabetic'; }
+    ctx.font='9px sans-serif'; ctx.fillStyle='rgba(120,235,165,.95)'; ctx.fillText('목표',x-w-7,yOf(GF_EDGE-0.035)); ctx.textAlign='center'; ctx.textBaseline='alphabetic'; }
   function roundRect(x,y,w,h,r){ ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
 
   function simulate(){
@@ -311,117 +262,94 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
         if(c.x>W-R){ c.x=W-R; c.vx=-Math.abs(c.vx)*WALLDAMP; spawnSparks(c.x,c.y,0.008,'#ffd9a0'); shake=Math.min(8,shake+2);}
         if(c.y>H-R){ c.y=H-R; c.vy=-Math.abs(c.vy)*WALLDAMP; }
         if(c.y<0){ c.fell=true; c.vx=0; c.vy=0; spawnPoof(c.x,0,c.color); shake=Math.min(13,shake+6); } }
-      for(let i=0;i<simCoins.length;i++) for(let j=i+1;j<simCoins.length;j++){
-        const a=simCoins[i],b=simCoins[j]; if(a.fell||b.fell) continue; let dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy);
-        if(d>0&&d<2*R){ const nx=dx/d,ny=dy/d,ov=2*R-d; a.x-=nx*ov/2;a.y-=ny*ov/2;b.x+=nx*ov/2;b.y+=ny*ov/2;
-          const rel=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;
-          if(rel<0){ const jmp=-1.85*rel/2; a.vx-=jmp*nx;a.vy-=jmp*ny;b.vx+=jmp*nx;b.vy+=jmp*ny;
-            spawnSparks((a.x+b.x)/2,(a.y+b.y)/2,Math.abs(rel),'#fff2c4'); shake=Math.min(13,shake+Math.abs(rel)*180); } } }
+      for(let i=0;i<simCoins.length;i++) for(let j=i+1;j<simCoins.length;j++){ const a=simCoins[i],b=simCoins[j]; if(a.fell||b.fell) continue; let dx=b.x-a.x,dy=b.y-a.y,d=Math.hypot(dx,dy);
+        if(d>0&&d<2*R){ const nx=dx/d,ny=dy/d,ov=2*R-d; a.x-=nx*ov/2;a.y-=ny*ov/2;b.x+=nx*ov/2;b.y+=ny*ov/2; const rel=(b.vx-a.vx)*nx+(b.vy-a.vy)*ny;
+          if(rel<0){ const jmp=-1.85*rel/2; a.vx-=jmp*nx;a.vy-=jmp*ny;b.vx+=jmp*nx;b.vy+=jmp*ny; spawnSparks((a.x+b.x)/2,(a.y+b.y)/2,Math.abs(rel),'#fff2c4'); shake=Math.min(13,shake+Math.abs(rel)*180); } } }
     }
-    for(const c of simCoins){ if(c.fell) continue; c.trail=c.trail||[];
-      if(Math.hypot(c.vx,c.vy)>STOP*4){ c.trail.push({x:c.x,y:c.y}); if(c.trail.length>7) c.trail.shift(); } else if(c.trail.length) c.trail.shift(); }
+    for(const c of simCoins){ if(c.fell) continue; c.trail=c.trail||[]; if(Math.hypot(c.vx,c.vy)>STOP*4){ c.trail.push({x:c.x,y:c.y}); if(c.trail.length>7) c.trail.shift(); } else if(c.trail.length) c.trail.shift(); }
     return simCoins.every(c=>c.fell||(c.vx===0&&c.vy===0));
   }
 
   function loop(t){ now=t;
-    if(phase==='angle'){ angle=Math.sin(t/620)*MAXA; }
-    else if(phase==='power'){ power=PSCALE*(0.5-0.5*Math.cos(t/520)); }
-    else if(phase==='sim'){ simFrames++; if(simulate()||simFrames>900) finishShot(); }
+    if(phase==='angle'){ angle=Math.sin(t/620)*MAXA; if(mode==='online'&&t-lastAimSent>400){ lastAimSent=t; sendAim(); } }
+    else if(phase==='power'){ power=PSCALE*(0.5-0.5*Math.cos(t/520)); if(mode==='online'&&t-lastAimSent>400){ lastAimSent=t; sendAim(); } }
+    else if(phase==='sim'){ simFrames++; if(simulate()||simFrames>900){ if(observing) finishObserve(); else finishShot(); } }
     updateParticles(); render(); requestAnimationFrame(loop); }
 
-  function setBanner(){ if(turnIndex===lastBannerTurn) return; lastBannerTurn=turnIndex;
-    const cur=players.find(p=>p.id===order[turnIndex]); if(!cur) return; const b=$('turnBanner');
-    b.textContent=(mode==='online'&&cur.id===myId)?'내 차례! 🎯':cur.name+' 차례';
-    b.classList.remove('show'); void b.offsetWidth; b.classList.add('show'); }
-  function startMyTurn(){ phase='angle'; angle=0; power=PMIN; const cur=players.find(p=>p.id===order[turnIndex]); shooterColor=cur.color;
-    $('actionBtn').textContent='각도 고정'; $('actionBtn').className='btn lock';
-    $('stageMsg').textContent='각도를 정하세요 (좌우로 흔들리는 조준선)'; setBanner(); updateHud(); }
-  function waitRemote(){ phase='remoteWait'; const cur=players.find(p=>p.id===order[turnIndex]);
+  function setBanner(){ if(turnIndex===lastBannerTurn) return; lastBannerTurn=turnIndex; const cur=players.find(p=>p.id===order[turnIndex]); if(!cur) return; const b=$('turnBanner'); b.textContent=(mode==='online'&&cur.id===myId)?'내 차례! 🎯':cur.name+' 차례'; b.classList.remove('show'); void b.offsetWidth; b.classList.add('show'); }
+  function startMyTurn(){ phase='angle'; angle=0; power=PMIN; remoteAim.active=false; const cur=players.find(p=>p.id===order[turnIndex]); shooterColor=cur.color; lastAimSent=0;
+    $('actionBtn').textContent='각도 고정'; $('actionBtn').className='btn lock'; $('stageMsg').textContent='각도를 정하세요 (좌우로 흔들리는 조준선)'; setBanner(); updateHud(); }
+  function waitRemote(){ phase='remoteWait'; remoteAim.active=false; const cur=players.find(p=>p.id===order[turnIndex]); shooterColor=cur?cur.color:'#fff';
     $('actionBtn').className='btn lock hide'; $('stageMsg').textContent=(cur?cur.name:'상대')+' 님이 조준 중...'; setBanner(); updateHud(); }
-  function onAction(){ if(phase==='angle'){ phase='power'; $('actionBtn').textContent='발사!'; $('actionBtn').className='btn go';
-      $('stageMsg').textContent='파워를 정하세요 (초록 구간이 모서리 안전지대!)'; } else if(phase==='power'){ launch(); } }
+  function onAction(){ if(phase==='angle'){ phase='power'; lastAimSent=0; $('actionBtn').textContent='발사!'; $('actionBtn').className='btn go'; $('stageMsg').textContent='파워를 정하세요 (초록 구간이 모서리 안전지대!)'; } else if(phase==='power'){ launch(); } }
   function launch(){ const cur=players.find(p=>p.id===order[turnIndex]); simCoins=coins.map(c=>({...c,vx:0,vy:0,trail:[]}));
     const dx=Math.sin(angle),dy=-Math.cos(angle); let spawnX=SX;
     for(const c of simCoins){ if(!c.fell&&Math.hypot(c.x-spawnX,c.y-SY)<2*R) spawnX+=2.1*R*(Math.random()<.5?-1:1); }
     spawnX=Math.max(R,Math.min(W-R,spawnX));
+    if(mode==='online') sendShot({owner:cur.id, spawnX, angle, power}); // 상대도 같은 물리로 재생
     simCoins.push({id:'c'+Date.now(),owner:cur.id,name:cur.name,color:cur.color,x:spawnX,y:SY,vx:dx*power,vy:dy*power,fell:false,trail:[]});
-    spawnSparks(spawnX,SY,power*0.7,lighten(cur.color,0.3)); phase='sim'; simFrames=0;
-    $('actionBtn').className='btn lock hide'; $('stageMsg').textContent='동전이 미끄러지는 중...'; }
-  function finishShot(){ coins=simCoins.filter(c=>!c.fell).map(c=>({id:c.id,owner:c.owner,name:c.name,color:c.color,x:c.x,y:c.y,fell:false}));
-    simCoins=[]; turnIndex++;
+    spawnSparks(spawnX,SY,power*0.7,lighten(cur.color,0.3)); phase='sim'; simFrames=0; $('actionBtn').className='btn lock hide'; $('stageMsg').textContent='동전이 미끄러지는 중...'; }
+  function finishShot(){ coins=simCoins.filter(c=>!c.fell).map(c=>({id:c.id,owner:c.owner,name:c.name,color:c.color,x:c.x,y:c.y,fell:false})); simCoins=[]; turnIndex++;
     if(turnIndex>=order.length){ endGame(); if(mode==='online') broadcast('finished'); }
     else { if(mode==='online'){ broadcast('playing'); waitRemote(); } else startMyTurn(); }
     updateGameList(); }
-  function endGame(){ phase='finished';
-    let rows=players.map(p=>{ const c=coins.find(cc=>cc.owner===p.id); return {name:p.name,color:p.color,y:(c?c.y:999),fell:!c}; }).sort((a,b)=>a.y-b.y);
+
+  // ----- 상대 턴 실시간 보기 -----
+  function onRemoteAim(p){ if(phase==='remoteWait'){ remoteAim.active=true; remoteAim.angle=p.angle; remoteAim.power=p.power; remoteAim.aphase=p.aphase; } }
+  function onRemoteShot(d){ if(phase==='sim') return; remoteAim.active=false;
+    simCoins=coins.map(c=>({...c,vx:0,vy:0,trail:[]}));
+    const cur=players.find(p=>p.id===d.owner)||{color:'#fff',name:'',id:d.owner};
+    const dx=Math.sin(d.angle),dy=-Math.cos(d.angle);
+    simCoins.push({id:'rc'+Date.now(),owner:d.owner,name:cur.name,color:cur.color,x:d.spawnX,y:SY,vx:dx*d.power,vy:dy*d.power,fell:false,trail:[]});
+    spawnSparks(d.spawnX,SY,d.power*0.7,lighten(cur.color,0.3));
+    observing=true; phase='sim'; simFrames=0; $('stageMsg').textContent='상대가 발사했습니다!'; }
+  function finishObserve(){ coins=simCoins.filter(c=>!c.fell).map(c=>({id:c.id,owner:c.owner,name:c.name,color:c.color,x:c.x,y:c.y,fell:false})); simCoins=[]; observing=false; updateGameList();
+    if(pendingRoom){ const r=pendingRoom; pendingRoom=null; localVersion=r.version; applyRoom(r); } else { phase='remoteWait'; $('stageMsg').textContent='결과 동기화 중...'; } }
+
+  function endGame(){ phase='finished'; let rows=players.map(p=>{ const c=coins.find(cc=>cc.owner===p.id); return {name:p.name,color:p.color,y:(c?c.y:999),fell:!c}; }).sort((a,b)=>a.y-b.y);
     const win=rows[0]; $('winName').textContent=win.name+' 우승!';
-    $('rankList').innerHTML=rows.map((r,i)=>`<div><span style="width:18px">${i+1}</span>
-      <span class="dot" style="background:${r.color};color:${r.color}"></span>
-      <span style="flex:1">${r.name}</span><span style="color:#bda175">${r.fell?'떨어짐':'거리 '+(r.y*100).toFixed(1)}</span></div>`).join('');
+    $('rankList').innerHTML=rows.map((r,i)=>`<div><span style="width:18px">${i+1}</span><span class="dot" style="background:${r.color};color:${r.color}"></span><span style="flex:1">${r.name}</span><span style="color:#bda175">${r.fell?'떨어짐':'거리 '+(r.y*100).toFixed(1)}</span></div>`).join('');
     $('winOverlay').classList.remove('hide'); startConfetti(); }
-  function updateHud(){ const cur=players.find(p=>p.id===order[turnIndex]);
-    $('turnName').textContent=cur?cur.name:'-'; $('turnName').style.color=cur?cur.color:'#ffd58a'; $('progress').textContent=turnIndex+' / '+order.length+' 발사 완료'; }
-  function updateGameList(){ $('gameList').innerHTML=players.map(p=>{ const c=coins.find(cc=>cc.owner===p.id), isTurn=order[turnIndex]===p.id;
-    return `<div class="pchip ${isTurn?'turn':''}"><span class="dot" style="background:${p.color};color:${p.color}"></span>
-      <span style="flex:1">${p.name}${p.id===myId&&mode==='online'?' (나)':''}</span>
-      <span style="color:#a98b62;font-size:12px">${c?'거리 '+(c.y*100).toFixed(1):'대기'}</span></div>`; }).join(''); }
+  function updateHud(){ const cur=players.find(p=>p.id===order[turnIndex]); $('turnName').textContent=cur?cur.name:'-'; $('turnName').style.color=cur?cur.color:'#ffd58a'; $('progress').textContent=turnIndex+' / '+order.length+' 발사 완료'; }
+  function updateGameList(){ $('gameList').innerHTML=players.map(p=>{ const c=coins.find(cc=>cc.owner===p.id), isTurn=order[turnIndex]===p.id; return `<div class="pchip ${isTurn?'turn':''}"><span class="dot" style="background:${p.color};color:${p.color}"></span><span style="flex:1">${p.name}${p.id===myId&&mode==='online'?' (나)':''}</span><span style="color:#a98b62;font-size:12px">${c?'거리 '+(c.y*100).toFixed(1):'대기'}</span></div>`; }).join(''); }
 
   const confCv=$('confetti'); let cctx=confCv.getContext('2d'), confPieces=[], confRun=false;
-  function startConfetti(){ confCv.width=window.innerWidth; confCv.height=window.innerHeight; confPieces=[];
-    const cols=['#ff5c5c','#4d94ff','#33cc77','#ffd23d','#c46bff','#ffffff'];
-    for(let i=0;i<140;i++) confPieces.push({x:Math.random()*confCv.width,y:-Math.random()*confCv.height,vx:(Math.random()-.5)*2,vy:2+Math.random()*4,
-      w:6+Math.random()*8,h:8+Math.random()*8,rot:Math.random()*6.28,vr:(Math.random()-.5)*0.3,color:cols[i%cols.length]});
+  function startConfetti(){ confCv.width=window.innerWidth; confCv.height=window.innerHeight; confPieces=[]; const cols=['#ff5c5c','#4d94ff','#33cc77','#ffd23d','#c46bff','#ffffff'];
+    for(let i=0;i<140;i++) confPieces.push({x:Math.random()*confCv.width,y:-Math.random()*confCv.height,vx:(Math.random()-.5)*2,vy:2+Math.random()*4,w:6+Math.random()*8,h:8+Math.random()*8,rot:Math.random()*6.28,vr:(Math.random()-.5)*0.3,color:cols[i%cols.length]});
     confRun=true; confLoop(); }
-  function confLoop(){ if(!confRun) return; cctx.clearRect(0,0,confCv.width,confCv.height);
-    for(const p of confPieces){ p.x+=p.vx; p.y+=p.vy; p.vx+=Math.sin(p.y*0.02)*0.05; p.rot+=p.vr;
-      if(p.y>confCv.height+20){ p.y=-20; p.x=Math.random()*confCv.width; }
-      cctx.save(); cctx.translate(p.x,p.y); cctx.rotate(p.rot); cctx.fillStyle=p.color; cctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); cctx.restore(); }
-    requestAnimationFrame(confLoop); }
+  function confLoop(){ if(!confRun) return; cctx.clearRect(0,0,confCv.width,confCv.height); for(const p of confPieces){ p.x+=p.vx; p.y+=p.vy; p.vx+=Math.sin(p.y*0.02)*0.05; p.rot+=p.vr; if(p.y>confCv.height+20){ p.y=-20; p.x=Math.random()*confCv.width; } cctx.save(); cctx.translate(p.x,p.y); cctx.rotate(p.rot); cctx.fillStyle=p.color; cctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); cctx.restore(); } requestAnimationFrame(confLoop); }
   function stopConfetti(){ confRun=false; cctx.clearRect(0,0,confCv.width,confCv.height); }
 
-  function startLocal(n){ players=[]; for(let i=0;i<n;i++) players.push({id:'L'+i,name:'플레이어'+(i+1),color:COLORS[i]});
-    if(myName) players[0].name=myName; order=shuffle(players.map(p=>p.id)); turnIndex=0; coins=[]; particles=[]; lastBannerTurn=-1; mode='local';
-    show('game'); resize(); updateGameList(); startMyTurn(); }
+  function startLocal(n){ players=[]; for(let i=0;i<n;i++) players.push({id:'L'+i,name:'플레이어'+(i+1),color:COLORS[i]}); if(myName) players[0].name=myName; order=shuffle(players.map(p=>p.id)); turnIndex=0; coins=[]; particles=[]; lastBannerTurn=-1; mode='local'; show('game'); resize(); updateGameList(); startMyTurn(); }
   function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.random()*(i+1)|0; [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
   async function createRoom(){ if(!myName){ flashName(); return; } if(!supa){ alert('index.html 상단에 Supabase URL / anon key를 먼저 입력하세요.'); return; }
     const code=Array.from({length:4},()=>String.fromCharCode(65+Math.random()*26|0)).join('');
-    room={code,status:'lobby',hostId:myId,version:1,players:[{id:myId,name:myName,color:COLORS[0]}],order:[],turnIndex:0,coins:[]};
-    localVersion=1; try{ await saveRoom(room); }catch(e){ alert('방 생성 실패. Supabase 설정을 확인하세요.'); return; }
-    enterWaiting(code,true); }
+    room={code,status:'lobby',hostId:myId,version:1,players:[{id:myId,name:myName,color:COLORS[0]}],order:[],turnIndex:0,coins:[]}; localVersion=1;
+    try{ await saveRoom(room); }catch(e){ alert('방 생성 실패. Supabase 설정을 확인하세요.'); return; } enterWaiting(code,true); }
   async function joinRoom(){ if(!myName){ flashName(); return; } if(!supa){ alert('index.html 상단에 Supabase URL / anon key를 먼저 입력하세요.'); return; }
     const code=$('joinCode').value.toUpperCase().trim(); if(code.length!==4){ alert('4자리 방 코드를 입력하세요.'); return; }
     let r; try{ r=await loadRoom(code); }catch(e){ r=null; } if(!r){ alert('방을 찾을 수 없습니다.'); return; } if(r.status!=='lobby'){ alert('이미 시작된 방입니다.'); return; }
-    if(!r.players.find(p=>p.id===myId)){ r.players.push({id:myId,name:myName,color:COLORS[r.players.length%COLORS.length]}); r.version++;
-      try{ await saveRoom(r); }catch(e){} } localVersion=r.version; room=r; enterWaiting(code,false); renderWaitList(r); }
-  function enterWaiting(code,isHost){ mode='online'; room=room||{}; room.code=code; $('roomCode').textContent=code;
-    $('startOnline').classList.toggle('hide',!isHost);
-    $('waitHint').textContent=isHost?'참여자가 모이면 시작 버튼을 누르세요.':'방장이 시작하기를 기다리는 중...';
-    show('waiting'); subscribeRoom(code); }
-  function renderWaitList(r){ $('waitList').innerHTML=r.players.map(p=>
-    `<div class="pchip"><span class="dot" style="background:${p.color};color:${p.color}"></span><span style="flex:1">${p.name}${p.id===myId?' (나)':''}</span></div>`).join(''); }
+    if(!r.players.find(p=>p.id===myId)){ r.players.push({id:myId,name:myName,color:COLORS[r.players.length%COLORS.length]}); r.version++; try{ await saveRoom(r); }catch(e){} } localVersion=r.version; room=r; enterWaiting(code,false); renderWaitList(r); }
+  function enterWaiting(code,isHost){ mode='online'; room=room||{}; room.code=code; $('roomCode').textContent=code; $('startOnline').classList.toggle('hide',!isHost); $('waitHint').textContent=isHost?'참여자가 모이면 시작 버튼을 누르세요.':'방장이 시작하기를 기다리는 중...'; show('waiting'); subscribeRoom(code); }
+  function renderWaitList(r){ $('waitList').innerHTML=r.players.map(p=>`<div class="pchip"><span class="dot" style="background:${p.color};color:${p.color}"></span><span style="flex:1">${p.name}${p.id===myId?' (나)':''}</span></div>`).join(''); }
   function applyRoom(r){ room=r; players=r.players; order=r.order; turnIndex=r.turnIndex; coins=r.coins||[];
     if(r.status==='lobby'){ renderWaitList(r); return; }
     if(r.status==='finished'){ if($('game').classList.contains('hide')){ show('game'); resize(); } updateGameList(); endGame(); return; }
-    if(r.status==='playing'){ if($('game').classList.contains('hide')){ show('game'); resize(); } updateGameList();
-      const cur=order[turnIndex];
+    if(r.status==='playing'){ if($('game').classList.contains('hide')){ show('game'); resize(); } updateGameList(); const cur=order[turnIndex];
       if(cur===myId){ if(phase!=='angle'&&phase!=='power'&&phase!=='sim') startMyTurn(); } else waitRemote(); } }
-  async function startOnline(){ order=shuffle(players.map(p=>p.id)); room.order=order; room.status='playing'; room.turnIndex=0; room.coins=[]; room.version++;
-    localVersion=room.version; particles=[]; lastBannerTurn=-1; try{ await saveRoom(room); }catch(e){} applyRoom(room); }
+  async function startOnline(){ order=shuffle(players.map(p=>p.id)); room.order=order; room.status='playing'; room.turnIndex=0; room.coins=[]; room.version++; localVersion=room.version; particles=[]; lastBannerTurn=-1; try{ await saveRoom(room); }catch(e){} applyRoom(room); }
   async function broadcast(status){ room.coins=coins; room.turnIndex=turnIndex; room.status=status; room.version++; localVersion=room.version; try{ await saveRoom(room); }catch(e){} }
   function flashName(){ $('nameInput').style.borderColor='#ff5c5c'; $('nameInput').focus(); setTimeout(()=>$('nameInput').style.borderColor='',1200); }
 
-  $('modeSeg').onclick=e=>{ const d=e.target.closest('[data-mode]'); if(!d)return;
-    [...$('modeSeg').children].forEach(x=>x.classList.toggle('on',x===d)); mode=d.dataset.mode;
-    $('localSetup').classList.toggle('hide',mode!=='local'); $('onlineSetup').classList.toggle('hide',mode!=='online'); };
+  $('modeSeg').onclick=e=>{ const d=e.target.closest('[data-mode]'); if(!d)return; [...$('modeSeg').children].forEach(x=>x.classList.toggle('on',x===d)); mode=d.dataset.mode; $('localSetup').classList.toggle('hide',mode!=='local'); $('onlineSetup').classList.toggle('hide',mode!=='online'); };
   let localN=2;
   $('countSeg').onclick=e=>{ const d=e.target.closest('[data-n]'); if(!d)return; [...$('countSeg').children].forEach(x=>x.classList.toggle('on',x===d)); localN=+d.dataset.n; };
   $('nameInput').oninput=e=>{ myName=e.target.value.trim(); };
   $('startLocal').onclick=()=>startLocal(localN);
   $('createRoom').onclick=createRoom; $('joinRoom').onclick=joinRoom; $('startOnline').onclick=startOnline; $('actionBtn').onclick=onAction;
   cv.addEventListener('pointerdown',e=>{ e.preventDefault(); if(phase==='angle'||phase==='power') onAction(); });
-  $('again').onclick=()=>{ $('winOverlay').classList.add('hide'); stopConfetti(); unsubscribe();
-    phase='lobby'; coins=[]; particles=[]; shake=0; localVersion=-1; room=null; show('lobby'); };
+  $('again').onclick=()=>{ $('winOverlay').classList.add('hide'); stopConfetti(); unsubscribe(); observing=false; pendingRoom=null; phase='lobby'; coins=[]; particles=[]; shake=0; localVersion=-1; room=null; show('lobby'); };
 
   requestAnimationFrame(loop);
 })();
