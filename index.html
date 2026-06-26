@@ -153,15 +153,18 @@ const SUPABASE_ANON_KEY = "sb_publishable_VioWLXOEoEcMy_FCWbEglA_NdpjKFMI";
   async function saveRoom(r){ if(!supa) return; await supa.from('rooms').upsert({ code:r.code, state:r, updated_at:new Date().toISOString() }); }
   async function loadRoom(code){ if(!supa) return null;
     const { data } = await supa.from('rooms').select('state').eq('code',code).maybeSingle(); return data?data.state:null; }
-  let channel=null;
+  let channel=null, pollTimer=null;
   function subscribeRoom(code){
     if(channel){ supa.removeChannel(channel); channel=null; }
     channel=supa.channel('room-'+code)
       .on('postgres_changes',{event:'*',schema:'public',table:'rooms',filter:'code=eq.'+code},
           p=>{ if(p.new && p.new.state) handleRemoteState(p.new.state); })
       .subscribe();
+    // 백업 폴링: Realtime이 끊기거나 늦어도 2초 안에 최신 상태를 따라잡음
+    if(pollTimer) clearInterval(pollTimer);
+    pollTimer=setInterval(async ()=>{ try{ const r=await loadRoom(code); if(r) handleRemoteState(r); }catch(e){} }, 2000);
   }
-  function unsubscribe(){ if(channel){ supa.removeChannel(channel); channel=null; } }
+  function unsubscribe(){ if(channel){ supa.removeChannel(channel); channel=null; } if(pollTimer){ clearInterval(pollTimer); pollTimer=null; } }
   function handleRemoteState(r){
     if(r.version<=localVersion){ if(r.status==='lobby') renderWaitList(r); return; }
     localVersion=r.version; applyRoom(r);
